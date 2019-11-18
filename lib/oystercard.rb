@@ -8,14 +8,23 @@ class Oystercard
   end
 
   def top_up(money)
-    fail "Cannot top up the card above #{MAXIMUM_BALANCE}" unless within_limit?(money)
+    fail "Cannot top up the card above #{MAXIMUM_BALANCE}" if above_max?(money)
     @balance += money
+  end
+
+  def deduct(money)
+    fail "You do not have enough money!" if below_min?(money)
+    @balance -= money
   end
 
   private
 
-  def within_limit?(money)
-    @balance + money <= MAXIMUM_BALANCE
+  def above_max?(money)
+    @balance + money >= MAXIMUM_BALANCE
+  end
+
+  def below_min?(money)
+    @balance - money < 0
   end
 
 end

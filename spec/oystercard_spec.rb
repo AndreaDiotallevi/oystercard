@@ -23,4 +23,17 @@ describe Oystercard do
     end
   end
 
+  describe "#deduct" do
+    it "deducts 10 from balance when balance 20" do
+      oystercard.top_up(20)
+      oystercard.deduct(10)
+      expect(oystercard.balance).to eq 10
+    end
+
+    it "raises an error if you try to deduct more than your balance" do
+      message = "You do not have enough money!"
+      expect { oystercard.deduct(10) }.to raise_error(message)
+    end
+  end
+
 end
