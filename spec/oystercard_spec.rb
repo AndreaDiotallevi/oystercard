@@ -31,7 +31,7 @@ describe Oystercard do
     end
 
     it "raises an error if you try to deduct more than your balance" do
-      message = "You do not have enough money!"
+      message = "You do not have enough funds!"
       expect { oystercard.deduct(10) }.to raise_error(message)
     end
   end
@@ -42,16 +42,25 @@ describe Oystercard do
     end
 
     it "should return true for a card that has been touched in" do
+      oystercard.top_up(Oystercard::MIN_TICKET_PRICE)
       oystercard.touch_in
       expect(oystercard.in_journey?).to eq true
     end
 
     it "should return false for a card that has been touched in and out" do
+      oystercard.top_up(Oystercard::MIN_TICKET_PRICE)
       oystercard.touch_in
       oystercard.touch_out
       expect(oystercard.in_journey?).to eq false
     end
+  end
 
+  describe "#touch_in" do
+    it "raises an error message if you try to touch in with less than the minimum ticket value" do
+      message = "You do not have enough funds!"
+      oystercard.top_up(Oystercard::MIN_TICKET_PRICE - 1)
+      expect { oystercard.touch_in }.to raise_error(message)
+    end
   end
 
 end

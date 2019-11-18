@@ -1,5 +1,7 @@
 class Oystercard
+  
   MAXIMUM_BALANCE = 90
+  MIN_TICKET_PRICE = 1
 
   attr_reader :balance, :in_journey
 
@@ -14,7 +16,7 @@ class Oystercard
   end
 
   def deduct(money)
-    fail "You do not have enough money!" if below_min?(money)
+    fail "You do not have enough funds!" if below_min?(money)
     @balance -= money
   end
 
@@ -23,6 +25,7 @@ class Oystercard
   end
 
   def touch_in
+    fail "You do not have enough funds!" if below_min_ticket?
     @in_journey = true
   end
 
@@ -39,5 +42,11 @@ class Oystercard
   def below_min?(money)
     @balance - money < 0
   end
+
+  def below_min_ticket?
+    @balance < MIN_TICKET_PRICE
+  end
+
+
 
 end
