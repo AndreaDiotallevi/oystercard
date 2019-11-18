@@ -36,4 +36,22 @@ describe Oystercard do
     end
   end
 
+  describe "#in_journey?" do
+    it "should return false for a new card" do
+      expect(oystercard.in_journey?).to eq false
+    end
+
+    it "should return true for a card that has been touched in" do
+      oystercard.touch_in
+      expect(oystercard.in_journey?).to eq true
+    end
+
+    it "should return false for a card that has been touched in and out" do
+      oystercard.touch_in
+      oystercard.touch_out
+      expect(oystercard.in_journey?).to eq false
+    end
+
+  end
+
 end
