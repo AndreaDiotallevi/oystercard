@@ -15,6 +15,12 @@ describe Oystercard do
       oystercard.top_up(20)
       expect(oystercard.balance).to eq 20
     end
+
+    it "raises an error if you try to top_up above 90" do
+      maximum_balance = Oystercard::MAXIMUM_BALANCE
+      message = "Cannot top up the card above #{maximum_balance}"
+      expect { oystercard.top_up(maximum_balance + 1) }.to raise_error(message)
+    end
   end
 
 end
